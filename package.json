@@ -1,0 +1,27 @@
+{
+  "name": "douban-user-visualization",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daixinye/douban-user-visualization.git"
+  },
+  "author": "daixinye",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daixinye/douban-user-visualization/issues"
+  },
+  "homepage": "https://github.com/daixinye/douban-user-visualization#readme",
+  "dependencies": {
+    "fullpage.js": "2.9.7",
+    "jquery": "^3.3.1",
+    "webpack": "^4.28.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.2.1"
+  }
+}
