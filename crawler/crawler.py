@@ -7,10 +7,10 @@ Created on Wed Jan  9 16:28:30 2019
 """
 import requests
 import re
-import getHeaders
+import crawler_http 
 from bs4 import BeautifulSoup
 
-headers=getHeaders.get_headers()
+headers= crawler_http.get_headers()
 #爬取用户基本数据
 def getUserBasicInfo(user_url,count):
     print('开始爬取第{}个用户！！！！'.format(count))

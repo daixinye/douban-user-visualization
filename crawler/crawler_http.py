@@ -51,3 +51,5 @@ def get_headers():
     headers={'User-Agent':random.choice(user_agents)}
     return headers
 
+if __name__ == '__main__':
+    print(get_headers())
