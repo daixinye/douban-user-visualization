@@ -23,6 +23,7 @@ def getUserBasicInfo(user_id, count):
     start_time = time.time()
     crawler_log.logTime()
     print('---- 开始爬取第{}个用户'.format(count))
+    print('crawler: ' + user_url)
     headers = crawler_http.get_headers()
     # 使用requests发送请求
     user = requests.get(user_url, headers=headers)
@@ -30,9 +31,10 @@ def getUserBasicInfo(user_id, count):
     soup = BeautifulSoup(user.text, 'lxml')
 
     # 判断用户是否有效
-    infobox = soup.find('div', class_='mn')
-    if infobox:
-        return -1
+    infobox = soup.select("#db-usr-profile")
+    if not infobox:
+        print('crawler: 无法正常获取用户数据')
+        return False
     # 获取用户基本信息
     all_info = []
     # id

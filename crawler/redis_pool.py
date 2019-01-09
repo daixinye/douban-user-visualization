@@ -23,7 +23,7 @@ def addUser(userId):
 
 # 获取随机用户
 def getRandomUser():
-    return redisClient.spop(KEY)
+    return redisClient.srandmember(KEY)
 
 # 获取用户列表
 
@@ -41,7 +41,7 @@ def removeUser(userId):
 
 
 def getRandomUserAndRemove():
-    userId = getRandomUser()
+    userId = redisClient.spop(KEY)
     if userId:
         addUserToUsed(userId)
         return userId
@@ -54,6 +54,14 @@ def addUserToUsed(userId):
 
 def getUsersUsed():
     return redisClient.smembers(KEY_USED)
+
+
+def getUsersCount():
+    return redisClient.scard(KEY)
+
+
+def getUsersUsedCount():
+    return redisClient.scard(KEY_USED)
 
 
 if __name__ == '__main__':
