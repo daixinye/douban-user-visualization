@@ -116,8 +116,11 @@ def getUserBasicInfo(user_id, count):
     group_num = re.findall('\((\d+)\)', group.get_text())[0] if group else 0
 
     # 关注人数
-    contact = soup.find('div', id='friend').find('a').get_text()
-    contact_num = int(re.findall(r'成员(\d+)', contact)[0])  # 关注人数
+    contact = soup.find('div', id='friend').find('a')
+    contact_num = 0
+    if contact:
+        contact = contact.get_text()
+        contact_num = int(re.findall(r'成员(\d+)', contact)[0])  # 关注人数
 
     # 被关注人数
     rev_contact = soup.find('p', class_='rev-link').find('a').get_text()

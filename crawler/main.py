@@ -17,6 +17,8 @@ validCount = 0
 while 1:
     # 从用户池中获取随机用户并从用户池中删除
     userId = str(rp.getRandomUserAndRemove(), 'utf-8')
+    if not userId:
+        break
 
     # 抓取数据
     userInfo = cr.getUserBasicInfo(userId, count)
