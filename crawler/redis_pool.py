@@ -41,11 +41,7 @@ def removeUser(userId):
 
 
 def getRandomUserAndRemove():
-    userId = redisClient.spop(KEY)
-    if userId:
-        addUserToUsed(userId)
-        return userId
-    return False
+    return redisClient.spop(KEY)
 
 
 def addUserToUsed(userId):

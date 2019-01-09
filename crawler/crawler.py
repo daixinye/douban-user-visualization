@@ -32,8 +32,12 @@ def getUserBasicInfo(user_id, count):
 
     # 判断用户是否有效
     infobox = soup.select("#db-usr-profile")
+    mn = soup.select("div.mn")
     if not infobox:
         print('crawler: 无法正常获取用户数据')
+        return False
+    if mn:
+        print('crawler: 该用户账号已被停用')
         return False
     # 获取用户基本信息
     all_info = []

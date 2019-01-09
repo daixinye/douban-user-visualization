@@ -15,10 +15,8 @@ startTime = time.time()
 count = 1
 validCount = 0
 while 1:
-    # 从用户池中获取随机用户
-    userId = str(rp.getRandomUser(), 'utf-8')
-    # 将用户从用户池中删除并
-    rp.removeUser(userId)
+    # 从用户池中获取随机用户并从用户池中删除
+    userId = str(rp.getRandomUserAndRemove(), 'utf-8')
 
     # 抓取数据
     userInfo = cr.getUserBasicInfo(userId, count)
