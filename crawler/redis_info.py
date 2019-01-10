@@ -1,7 +1,7 @@
 import redis
 import time
 
-HOST = "192.168.31.221"
+HOST = "0.0.0.0"
 PORT = 6379
 PASS = "douban"
 

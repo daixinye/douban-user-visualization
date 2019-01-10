@@ -1,7 +1,7 @@
 import redis
 import time
 
-HOST = "192.168.31.221"
+HOST = "0.0.0.0"
 PORT = 6379
 PASS = "douban"
 
@@ -60,9 +60,14 @@ def getUsersUsedCount():
     return redisClient.scard(KEY_USED)
 
 
+def isUserUsed(userId):
+    return redisClient.sismember(KEY_USED, userId)
+
+
 if __name__ == '__main__':
     temp = time.time()
-    print(getRandomUserAndRemove())
+    print(isUserUsed('4908947'))
+    # print(getRandomUserAndRemove())
 #     print(addUser(temp))
 #     print(getUsers())
 #     print(getUsersUsed())
