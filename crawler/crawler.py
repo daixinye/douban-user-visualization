@@ -34,10 +34,10 @@ def getUserBasicInfo(user_id, count):
     infobox = soup.select("#db-usr-profile")
     mn = soup.select("div.mn")
     if not infobox:
-        print('crawler: 无法正常获取用户数据')
+        print('crawler: ⚠️ 无法正常获取用户数据')
         return False
     if mn:
-        print('crawler: 该用户账号已被停用')
+        print('crawler: ⚠️ 该用户账号已被停用')
         return False
     # 获取用户基本信息
     all_info = []
@@ -130,7 +130,7 @@ def getUserBasicInfo(user_id, count):
                      book_collect_num, movie_do_num, movie_wish_num, movie_collect_num, review_num, group_num, official_account])
 
     crawler_log.logTime()
-    print("---- 第一个用户爬取结束，用时{}s".format(time.time() - start_time))
+    print("---- ✅ 用户爬取结束，用时{}s".format(time.time() - start_time))
     return all_info
 
 # 获取用户列表
