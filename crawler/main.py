@@ -15,16 +15,21 @@ startTime = time.time()
 count = 1
 validCount = 0
 while 1:
-    # 从用户池中获取随机用户并从用户池中删除
+    # 从用户池中获取随机用户
     userId = str(rp.getRandomUserAndRemove(), 'utf-8')
-    if not userId:
-        break
+    # userId = str(rp.getRandomUser(), 'utf-8')
+    if rp.isUserUsed(userId):
+        print('main: 用户 {} 已爬取，跳过\n'.format(userId))
+        continue
 
     # 抓取数据
     userInfo = cr.getUserBasicInfo(userId, count)
 
     # 写入数据到redis
     if userInfo:
+        # 从用户池中删除 防止多进程再次被爬取
+        # rp.removeUser(userId)
+        # 存储信息
         ri.addUserInfo(userId, str(userInfo))
         # 放入到已爬取的用户列表中
         rp.addUserToUsed(userId)
