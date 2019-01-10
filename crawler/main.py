@@ -11,9 +11,13 @@ import crawler as cr
 
 MAX_TIME = 10
 
+NO = "❌"
+YES = "✅"
+
 startTime = time.time()
 count = 1
 validCount = 0
+lastValidCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 while 1:
     # 从用户池中获取随机用户
     userId = str(rp.getRandomUserAndRemove(), 'utf-8')
@@ -34,6 +38,9 @@ while 1:
         # 放入到已爬取的用户列表中
         rp.addUserToUsed(userId)
         validCount += 1
+        lastValidCount.append(YES)
+    else:
+        lastValidCount.append(NO)
 
     # 休息一会
     sleepTime = random.randint(1, MAX_TIME)
@@ -42,6 +49,8 @@ while 1:
     usersUsedCount = rp.getUsersUsedCount()
     print('main: 已经过 {} 秒（爬取 {} 秒/个，有效 {} 秒/个 ）, 用户池剩余 {} 个, 已爬取 {} 个, 本次爬虫有效用户 {} 个（有效比 {}%）'.format(
           duringTime, int(duringTime / count), int(duringTime / validCount), usersCount, usersUsedCount, validCount, int(100 * validCount / count)))
+    print('main: 最后10个爬取情况 ' + str(lastValidCount))
     print('main: 休息个' + str(sleepTime) + '秒吧\n')
     count += 1
+    del lastValidCount[0]
     time.sleep(sleepTime)
