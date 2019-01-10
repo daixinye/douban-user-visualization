@@ -1,15 +1,14 @@
 import redis
 import time
+import redis_client
 
-HOST = "0.0.0.0"
-PORT = 6379
-PASS = "douban"
+
 
 KEY = "yonghuchi"
 KEY_USED = "yonghuchi_used"
 
-
-redisClient = redis.Redis(host=HOST, port=PORT, password=PASS)
+#连接redis客户端
+redisClient=redis_client.ConnectToRedis()
 
 # 加入用户到用户池中
 

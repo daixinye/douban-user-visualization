@@ -14,7 +14,9 @@ import crawler_log
 import json
 import redis_pool as rp
 import random
+import redis_client
 
+redisClient = redis_client.ConnectToRedis()
 # 爬取用户基本数据
 
 
@@ -134,72 +136,48 @@ def getUserBasicInfo(user_id, count):
     print("---- ✅ 用户爬取结束，用时{}s".format(time.time() - start_time))
     return all_info
 
+
 # 2.爬取用户电影数据
 def getUserMovieInfo(user_id,count):
-    user_url='https://www.douban.com/people/'+user_id+'/'
-    start_time = time.time()
+    print("正在爬取第{}个用户正在看电影列表...".format(count))
+    user_data=redisClient.get("douban_user_info:"+user_id)
+    do_movie_num=eval(user_data)[10]
+    if do_movie_num == 0:
+        print("该用户没有正在看的电影")
+        return -1
+    else:
+        user_url='https://movie.douban.com/people/'+user_id+'/'
+        start_time = time.time()
+        #crawler_log.logTime()
+        #所有电影[id,addDate]列表
+        all_movies_info=[]
+        #页数
+        n=do_movie_num//30
+        print("共有{}页".format(n))
+        for i in range(n+1):
+            headers = crawler_http.get_headers()
+            print("正在爬取第{}页...".format(i))
+            movie_url=user_url+'do?sort=time&amp;start='+str((i)*30)+'&amp;filter=all&amp;mode=list&amp;tags_sort=count'
+            #print(movie_url)
+            movie=requests.get(movie_url,headers=headers)
+            movie.encoding='utf-8'
+            soup=BeautifulSoup(movie.text,'lxml')
+            all_movies=soup.find_all('li',class_='item')
+            #每页获取30个
+            for m in all_movies:
+                t=m.find('div',class_='title')
+                movie_url=t.find('a').get('href')
+                movie_id=re.split(r'/',movie_url)[-2]
+                d=m.find('div',class_='date').get_text()
+                movie_date=re.search(r'(\d{4}-\d{2}-\d{2})',d).group()
+                #print(movie_id_date)
+                all_movies_info.append([movie_id,movie_date])
+            time.sleep(random.randint(1,5))
+        #print(len(all_movies_info))
+        #print(all_movies_info)
     crawler_log.logTime()
-    print('---- 开始爬取第{}个用户的电影数据'.format(count))
-    headers = crawler_http.get_headers()
-     #使用requests发送请求
-    user=requests.get(user_url,headers=headers)
-    user.encoding='utf-8'
-    soup=BeautifulSoup(user.text,'lxml')
-    movie=soup.find('div',id='movie').find('span',class_='pl')
-    if movie:
-        movies=movie.find_all('a')
-        for i in range(len(movies)):
-            has_do=re.search('/do',movies[i].get('href'))
-            if has_do:  
-                movie_do_num=int(re.match(r'\d+',movies[i].get_text()).group())
-                movie_do_url=has_do.string
-                #print(movie_do_url)
-                #爬取用户“正在看的电影”页面，获取所有的电影id
-                movies_do=getMovieId(movie_do_url,movie_do_num)
-                continue
-            has_wish=re.search('/wish',movies[i].get('href'))
-            if has_wish:
-                movie_wish_num=int(re.match(r'\d+',movies[i].get_text()).group())
-                movie_wish_url=has_wish.string
-                #爬取用户“想看的电影”页面，获取所有的电影id
-                movies_wish=getMovieId(movie_wish_url,movie_wish_num)
-                continue   
-            has_collect=re.search('/collect',movies[i].get('href'))
-            if has_collect:
-                movie_collect_num=int(re.match(r'\d+',movies[i].get_text()).group())
-                movie_collect_url=has_collect.string
-                #爬取用户“已看过的电影”页面，获取所有的电影id
-                movies_collect=getMovieId(movie_collect_url,movie_collect_num)
-                continue
-    crawler_log.logTime()
-    print("---- 第一个用户爬取结束，用时{}s".format(time.time() - start_time))
-    return movies_do,movies_wish,movies_collect
-def getMovieId(movie_init_url,movie_num):
-    #所有电影id列表
-    all_movies_id=[]
-    #页数
-    n=movie_num//30
-    for i in range(n+1):
-        headers = crawler_http.get_headers()
-        print(i)
-        movie_new_url=movie_init_url+'?start='+str((i)*30)+'&sort=time&rating=all&filter=all&mode=list'
-        #print(movie_new_url)
-        movie=requests.get(movie_new_url,headers=headers)
-        movie.encoding='utf-8'
-        soup=BeautifulSoup(movie.text,'lxml')
-        all_movies=soup.find_all('li',class_='item')
-        #print(len(all_movies))
-        #每页获取30个
-        for m in all_movies:     
-            m=m.find('div',class_='title')
-            movie_url=m.find('a').get('href')
-            movie_id=re.split(r'/',movie_url)[-2]
-            all_movies_id.append(movie_id)
-           #print(movie_id)
-    all_movies_id='-'.join(all_movies_id)
-    #print(len(all_movies_id))
-    #print(all_movies_id)
-    return all_movies_id
+    print("---- 第{}用户正在看电影爬取结束，用时{}s".format(count,time.time() - start_time))
+    return all_movies_info
 
 
 # 3.爬取用户id数据
@@ -253,17 +231,17 @@ if __name__ == "__main__":
     # print(getUserBasicInfo('r...7', 1))
     
     #话题广场-正在发生用户
-    #url = 'https://www.douban.com/j/gallery/new_posts?start=400&count=200'
-    #result = getHappeningUserId(url)
-    #for uid in result:
-    #    rp.addUser(uid)
+    url = 'https://www.douban.com/j/gallery/new_posts?start=2000&count=200'
+    result = getHappeningUserId(url)
+    for uid in result:
+        rp.addUser(uid)
     #电影影评用户
-    for i in range(130,1000):
-        result=addCommentsUserId(i)
-        for uid in result:
-            rp.addUser(uid)
-        time.sleep(10)
-   
+    #for i in range(167,1000):
+    #    result=addCommentsUserId(i)
+    #    for uid in result:
+    #        rp.addUser(uid)
+    #    time.sleep(10)
+
     #print(result)
     
     
