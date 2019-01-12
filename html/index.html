@@ -27,32 +27,62 @@
 
       <!-- 常居地 -->
       <div class="section" id="location">
-        <!-- 常居地. -->
+        <!-- 常居地 -->
+        <div
+          id="location:map"
+          style="width: 800px;height:600px;margin: 0 auto;"
+        ></div>
+      </div>
+
+      <!-- 时间 -->
+      <div class="section">
+        <!-- 年份分布 -->
         <div class="slide">
           <div
-            id="location:map"
-            style="width: 800px;height:600px;margin: 0 auto;"
-          >
-            <!-- 这里以后是地图 -->
-          </div>
-        </div>
-        <div class="slide">
-          <div
-            id="main"
+            id="time:year"
             style="width: 600px;height:400px;margin: 0 auto;"
           ></div>
         </div>
-        <div class="slide">Slide 2</div>
-        <div class="slide">Slide 3</div>
-        <script src="./location.js"></script>
+        <!-- 月份分布 -->
+        <div class="slide">
+          <div
+            id="time:month"
+            style="width: 600px;height:400px;margin: 0 auto;"
+          ></div>
+        </div>
+        <!-- 热力分布 1 -->
+        <div class="slide">
+          <div
+            id="time:all_1"
+            style="width: 900px;height:700px;margin: 0 auto;"
+          ></div>
+        </div>
+        <div class="slide">
+          <div
+            id="time:all_2"
+            style="width: 900px;height:700px;margin: 0 auto;"
+          ></div>
+        </div>
       </div>
 
-      <div class="section"></div>
-      <div class="section"></div>
-      <div class="section"></div>
-      <div class="section"></div>
-      <div class="section"></div>
-      <div class="section"></div>
+      <!-- 电影 -->
+      <div class="section">
+        <div id="movie" style="width: 800px;height:600px;margin: 0 auto;"></div>
+      </div>
+      <!-- 关注 -->
+      <div class="section">
+        <div
+          id="contact:all"
+          style="width: 800px;height:600px;margin: 0 auto;"
+        ></div>
+      </div>
+      <!-- id -->
+      <div class="section">
+        <div
+          id="username"
+          style="width: 800px;height:600px;margin: 0 auto;"
+        ></div>
+      </div>
     </div>
   </body>
   <script>
@@ -68,4 +98,5 @@
       $.fn.fullpage.setAllowScrolling(true);
     });
   </script>
+  <script src="./index.js"></script>
 </html>
