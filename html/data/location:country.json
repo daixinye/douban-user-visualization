@@ -1,0 +1,56 @@
+[
+  { "name": "Singapore", "children": [{ "name": "Singapore", "value": 66 }] },
+  {
+    "name": "South Korea",
+    "children": [{ "name": "Seoul (Sŏul)", "value": 28 }]
+  },
+  {
+    "name": "United States",
+    "children": [
+      { "name": "Boston", "value": 44 },
+      { "name": "Chicago", "value": 32 },
+      { "name": "Los Angeles", "value": 97 },
+      { "name": "New York City", "value": 158 },
+      { "name": "San Francisco Bay Area", "value": 76 },
+      { "name": "Seattle", "value": 23 }
+    ]
+  },
+  {
+    "name": "Australia",
+    "children": [
+      { "name": "Melbourne", "value": 64 },
+      { "name": "Sydney", "value": 56 }
+    ]
+  },
+  { "name": "Iceland", "children": [{ "name": "Reykjavík", "value": 40 }] },
+  { "name": "D.C", "children": [{ "name": "Washington", "value": 22 }] },
+  {
+    "name": "United Kingdom",
+    "children": [{ "name": "London", "value": 126 }]
+  },
+  { "name": "New Zealand", "children": [{ "name": "Auckland", "value": 26 }] },
+  { "name": "Germany", "children": [{ "name": "Berlin", "value": 25 }] },
+  {
+    "name": "Canada",
+    "children": [
+      { "name": "Montréal", "value": 24 },
+      { "name": "Toronto", "value": 62 },
+      { "name": "Vancouver", "value": 29 }
+    ]
+  },
+  {
+    "name": "North Korea",
+    "children": [{ "name": "P'yŏngyang", "value": 20 }]
+  },
+  {
+    "name": "Japan",
+    "children": [
+      { "name": "Kyoto", "value": 21 },
+      { "name": "Tōkyō", "value": 85 }
+    ]
+  },
+  { "name": "Afghanistan", "children": [{ "name": "Kābol", "value": 33 }] },
+
+  { "name": "Fiji", "children": [{ "name": "Fiji", "value": 26 }] },
+  { "name": "France", "children": [{ "name": "Paris", "value": 119 }] }
+]

@@ -108,6 +108,177 @@ void (function(id) {
 void (function(id) {
   var myChart = echarts.init(document.getElementById(id));
 
+  $.get("./data/location:country.json", function(json) {
+    data = json;
+    
+    option = {
+      series: {
+          type: 'sunburst',
+          data: data,
+          radius: [0, '90%'],
+          label: {
+              rotate: 'radial'
+          }
+      }
+  };
+    myChart.setOption(option);
+  });
+})("location:country");
+
+void (function(id) {
+  var myChart = echarts.init(document.getElementById(id));
+
+  $.get("./data/location:map_data.json", function(data) {
+    data = data.sort(function(a,b){
+      return b.value - a.value
+    }).filter(function(a){
+      return a.value > 200
+    })
+
+    var result = [];
+    data.forEach(function(item) {
+      result.push([item.name, item.value]);
+    });
+    result.sort(function(a,b){
+      return a[1] - b[1]
+    })
+    result.unshift(["city", "num"]);
+    var option = {
+      dataset: {
+        source: result
+      },
+      grid: { containLabel: true },
+      xAxis: { name: "用户数" },
+      yAxis: { type: "category" },
+      series: [
+        {
+          type: "bar",
+          encode: {
+            // Map the "amount" column to X axis.
+            x: "num",
+            // Map the "product" column to Y axis
+            y: "city"
+          }
+        }
+      ],
+      visualMap: {
+        orient: "horizontal",
+        left: "center",
+        min: 200,
+        max: 3000,
+        // text: ["High Score", "Low Score"],
+        // Map the score column to color
+        dimension: 1,
+        inRange: {
+          color: ["#D7DA8B", "#E15457"]
+        }
+      }
+    };
+
+    myChart.setOption(option);
+  });
+})("location:sort");
+
+// 加入时间
+void (function(id) {
+  var myChart = echarts.init(document.getElementById(id));
+
+  $.get("./data/time:number_year.json", function(data) {
+    var result = [];
+    data.forEach(function(item) {
+      result.push([item.create_year + " 年", item.number]);
+    });
+    result = result.sort(function(a, b) {
+      return a[1] - b[1];
+    });
+    result.unshift(["year", "num"]);
+    var option = {
+      dataset: {
+        source: result
+      },
+      grid: { containLabel: true },
+      xAxis: { name: "用户数" },
+      yAxis: { type: "category" },
+      series: [
+        {
+          type: "bar",
+          encode: {
+            // Map the "amount" column to X axis.
+            x: "num",
+            // Map the "product" column to Y axis
+            y: "year"
+          }
+        }
+      ],
+      visualMap: {
+        orient: "horizontal",
+        left: "center",
+        min: 0,
+        max: 2000,
+        // text: ["High Score", "Low Score"],
+        // Map the score column to color
+        dimension: 1,
+        inRange: {
+          color: ["#D7DA8B", "#E15457"]
+        }
+      }
+    };
+
+    myChart.setOption(option);
+  });
+})("time:year_sort");
+
+void (function(id) {
+  var myChart = echarts.init(document.getElementById(id));
+
+  $.get("./data/time:number_month.json", function(data) {
+    var result = [];
+    data.forEach(function(item) {
+      result.push([item.create_month + " 月", item.number]);
+    });
+    result = result.sort(function(a, b) {
+      return a[1] - b[1];
+    });
+    result.unshift(["month", "num"]);
+    var option = {
+      dataset: {
+        source: result
+      },
+      grid: { containLabel: true },
+      xAxis: { name: "用户数" },
+      yAxis: { type: "category" },
+      series: [
+        {
+          type: "bar",
+          encode: {
+            // Map the "amount" column to X axis.
+            x: "num",
+            // Map the "product" column to Y axis
+            y: "month"
+          }
+        }
+      ],
+      visualMap: {
+        orient: "horizontal",
+        left: "center",
+        min: 900,
+        max: 1500,
+        // text: ["High Score", "Low Score"],
+        // Map the score column to color
+        dimension: 1,
+        inRange: {
+          color: ["#D7DA8B", "#E15457"]
+        }
+      }
+    };
+
+    myChart.setOption(option);
+  });
+})("time:month_sort");
+
+void (function(id) {
+  var myChart = echarts.init(document.getElementById(id));
+
   $.get("./data/time:number_year.json", function(data) {
     var xAxis = [];
     var seriesData = [];
@@ -119,7 +290,7 @@ void (function(id) {
 
     var option = {
       title: {
-        text: "基于「加入年份」的用户分布"
+        // text: "「加入年份」"
       },
       tooltip: {},
       legend: {
@@ -156,7 +327,7 @@ void (function(id) {
 
     var option = {
       title: {
-        text: "基于「加入月份」的用户分布"
+        // text: "「加入月份」"
       },
       tooltip: {},
       legend: {
@@ -427,6 +598,7 @@ void (function(id) {
   });
 })("time:all_2");
 
+// 电影
 void (function(id) {
   var myChart = echarts.init(document.getElementById(id));
   $.get("./data/movie.json", function(json) {
@@ -503,64 +675,10 @@ void (function(id) {
   });
 })("movie");
 
+// 关注以及被关注
 void (function(id) {
   var myChart = echarts.init(document.getElementById(id));
   $.get("./data/contact.json", function(json) {
-    // console.log(json);
-
-    var builderJson = {
-      all: 10887,
-      charts: {
-        map: 3237,
-        lines: 2164,
-        bar: 7561,
-        line: 7778,
-        pie: 7355,
-        scatter: 2405,
-        candlestick: 1842,
-        radar: 2090,
-        heatmap: 1762,
-        treemap: 1593,
-        graph: 2060,
-        boxplot: 1537,
-        parallel: 1908,
-        gauge: 2107,
-        funnel: 1692,
-        sankey: 1568
-      },
-      components: {
-        geo: 2788,
-        title: 9575,
-        legend: 9400,
-        tooltip: 9466,
-        grid: 9266,
-        markPoint: 3419,
-        markLine: 2984,
-        timeline: 2739,
-        dataZoom: 2744,
-        visualMap: 2466,
-        toolbox: 3034,
-        polar: 1945
-      },
-      ie: 9743
-    };
-
-    var downloadJson = {
-      "echarts.min.js": 17365,
-      "echarts.simple.min.js": 4079,
-      "echarts.common.min.js": 6929,
-      "echarts.js": 14890
-    };
-
-    var themeJson = {
-      "dark.js": 1594,
-      "infographic.js": 925,
-      "shine.js": 1608,
-      "roma.js": 721,
-      "macarons.js": 2179,
-      "vintage.js": 1982
-    };
-
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
     canvas.width = canvas.height = 100;
@@ -732,26 +850,27 @@ void (function(id) {
   });
 })("contact:all");
 
+// 用户名
 void (function(id) {
   var myChart = echarts.init(document.getElementById(id));
 
   $.get("./data/username:wordsList.json", function(json) {
     json = json.filter(function(item) {
-      return item.value > 25 && item.name.search(/[a-zA-Z]/g) === -1
+      return item.value > 25 && item.name.search(/[a-zA-Z1-9]/g) === -1;
     });
     var legendData = [];
     var selected = {};
     var seriesData = null;
-    json.forEach(function(item,index) {
+    json.forEach(function(item, index) {
       legendData.push(item.name);
-      selected[item.name] = index > 10 ? false : true;
+      selected[item.name] = index > 1000 ? false : true;
     });
     seriesData = json;
 
     option = {
       title: {
-        text: "用户昵称「最常用字」",
-        // subtext: "纯属虚构",
+        text: "「最常用字」",
+        subtext: "中文字符",
         x: "center"
       },
       tooltip: {
@@ -770,7 +889,7 @@ void (function(id) {
       },
       series: [
         {
-          name: "姓名",
+          name: "用户名",
           type: "pie",
           radius: "55%",
           center: ["40%", "50%"],
@@ -788,4 +907,447 @@ void (function(id) {
 
     myChart.setOption(option);
   });
-})("username");
+})("user:username");
+
+void (function(id) {
+  var myChart = echarts.init(document.getElementById(id));
+
+  $.get("./data/username:wordsList.json", function(json) {
+    json = json.filter(function(item) {
+      return item.value > 25 && item.name.search(/[a-zA-Z]/g) === 0;
+    });
+    var legendData = [];
+    var selected = {};
+    var seriesData = null;
+    json.forEach(function(item, index) {
+      legendData.push(item.name);
+      selected[item.name] = index > 1000 ? false : true;
+    });
+    seriesData = json;
+
+    option = {
+      title: {
+        text: "「最常用字」",
+        subtext: "英文字符",
+        x: "center"
+      },
+      tooltip: {
+        trigger: "item",
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+      legend: {
+        type: "scroll",
+        orient: "vertical",
+        right: 10,
+        top: 20,
+        bottom: 20,
+        data: legendData,
+
+        selected: selected
+      },
+      series: [
+        {
+          name: "用户名",
+          type: "pie",
+          radius: "55%",
+          center: ["40%", "50%"],
+          data: seriesData,
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: "rgba(0, 0, 0, 0.5)"
+            }
+          }
+        }
+      ]
+    };
+
+    myChart.setOption(option);
+  });
+})("user:username_en");
+
+void (function(id) {
+  var myChart = echarts.init(document.getElementById(id));
+
+  $.get("./data/id:category.json", function(json) {
+    option = {
+      title: {
+        text: "「ID」",
+        // subtext: '虚构数据',
+        left: "center"
+      },
+      tooltip: {
+        trigger: "item",
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+      legend: {
+        // orient: 'vertical',
+        // top: 'middle',
+        bottom: 10,
+        left: "center",
+        data: ["自定义ID", "未自定义ID"]
+      },
+      series: [
+        {
+          type: "pie",
+          radius: "65%",
+          center: ["50%", "50%"],
+          selectedMode: "single",
+          data: [
+            { value: json[0].value, name: "自定义ID" },
+            { value: json[1].value, name: "未自定义ID" }
+          ],
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: "rgba(0, 0, 0, 0.5)"
+            }
+          }
+        }
+      ]
+    };
+
+    myChart.setOption(option);
+  });
+})("user:id");
+
+// 更多
+void (function(id) {
+  var myChart = echarts.init(document.getElementById(id));
+
+  $.get("./data/more:dur_rev_contact.json", function(json) {
+    var data = json.slice(0, 10000);
+
+    var schema = [
+      { name: "关注数", index: 0, text: "关注数" },
+      { name: "被关注数", index: 1, text: "被关注数" },
+      { name: "加入时长", index: 2, text: "加入时长" }
+    ];
+
+    var itemStyle = {
+      normal: {
+        opacity: 0.8,
+        shadowBlur: 10,
+        shadowOffsetX: 0,
+        shadowOffsetY: 0,
+        shadowColor: "rgba(0, 0, 0, 0.5)"
+      }
+    };
+
+    option = {
+      backgroundColor: "#404a59",
+      color: ["#dd4444", "#fec42c", "#80F1BE"],
+      legend: {
+        y: "top",
+        data: ["全体"],
+        textStyle: {
+          color: "#fff",
+          fontSize: 16
+        }
+      },
+      grid: {
+        x: "10%",
+        x2: 150,
+        y: "18%",
+        y2: "10%"
+      },
+      tooltip: {
+        padding: 10,
+        backgroundColor: "#222",
+        borderColor: "#777",
+        borderWidth: 1,
+        formatter: function(obj) {
+          var value = obj.value;
+          return (
+            '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">' +
+            "基本信息：" +
+            "</div>" +
+            schema[0].text +
+            "：" +
+            value[0] +
+            "<br>" +
+            schema[1].text +
+            "：" +
+            value[1] +
+            "<br>" +
+            schema[2].text +
+            "：" +
+            value[2] +
+            "<br>"
+          );
+        }
+      },
+      xAxis: {
+        type: "value",
+        name: "关注数",
+        nameGap: 16,
+        nameTextStyle: {
+          color: "#fff",
+          fontSize: 14
+        },
+        max: 2500,
+        splitLine: {
+          show: false
+        },
+        axisLine: {
+          lineStyle: {
+            color: "#eee"
+          }
+        }
+      },
+      yAxis: {
+        type: "value",
+        name: "被关注数",
+        nameLocation: "end",
+        nameGap: 20,
+        nameTextStyle: {
+          color: "#fff",
+          fontSize: 16
+        },
+        max: 15000,
+        axisLine: {
+          lineStyle: {
+            color: "#eee"
+          }
+        },
+        splitLine: {
+          show: false
+        }
+      },
+      visualMap: [
+        // {
+        //     left: 'right',
+        //     top: '10%',
+        //     dimension: 2,
+        //     min: 0,
+        //     max: 20000,
+        //     itemWidth: 30,
+        //     itemHeight: 120,
+        //     calculable: true,
+        //     precision: 0.1,
+        //     text: ['圆形大小：PM2.5'],
+        //     textGap: 30,
+        //     textStyle: {
+        //         color: '#fff'
+        //     },
+        //     inRange: {
+        //         symbolSize: [10, 70]
+        //     },
+        //     outOfRange: {
+        //         symbolSize: [10, 70],
+        //         color: ['rgba(255,255,255,.2)']
+        //     },
+        //     controller: {
+        //         inRange: {
+        //             color: ['#c23531']
+        //         },
+        //         outOfRange: {
+        //             color: ['#444']
+        //         }
+        //     }
+        // },
+        {
+          left: "right",
+          bottom: "5%",
+          dimension: 2,
+          min: 0,
+          max: 5000,
+          itemHeight: 120,
+          calculable: true,
+          precision: 0.1,
+          text: ["明暗：二氧化硫"],
+          textGap: 30,
+          textStyle: {
+            color: "#fff"
+          },
+          inRange: {
+            colorLightness: [1, 0.5]
+          },
+          outOfRange: {
+            color: ["rgba(255,255,255,.2)"]
+          },
+          controller: {
+            inRange: {
+              color: ["#c23531"]
+            },
+            outOfRange: {
+              color: ["#444"]
+            }
+          }
+        }
+      ],
+      series: [
+        {
+          name: "全体",
+          type: "scatter",
+          itemStyle: itemStyle,
+          data: data
+        }
+      ]
+    };
+    myChart.setOption(option);
+  });
+})("more:dur_rev_contact");
+
+void (function(id) {
+  var myChart = echarts.init(document.getElementById(id));
+
+  $.get("./data/more:year_avg.json", function(json) {
+    var result = [];
+    json[0].value.forEach(function(name, index) {
+      result.push({
+        name: name,
+        value: [
+          json[1].value[index],
+          json[2].value[index],
+          json[3].value[index],
+          json[4].value[index],
+          json[5].value[index],
+          json[6].value[index]
+        ]
+      });
+    });
+    option = {
+      title: {
+        // text: '「加入年份」&「各项均值」'
+      },
+      tooltip: {},
+      legend: {
+        data: json[0].value.sort()
+      },
+      radar: {
+        // shape: 'circle',
+        name: {
+          textStyle: {
+            color: "#fff",
+            backgroundColor: "#999",
+            borderRadius: 3,
+            padding: [3, 5]
+          }
+        },
+        indicator: [
+          { name: "平均关注数", max: 500 },
+          { name: "平均被关注数", max: 6000 },
+          { name: "平均加入小组数", max: 120 },
+          { name: "平均评论数", max: 50 },
+          { name: "平均电影数", max: 2500 },
+          { name: "平均阅读数", max: 1200 }
+        ]
+      },
+      series: [
+        {
+          name: "预算 vs 开销（Budget vs spending）",
+          type: "radar",
+          // areaStyle: {normal: {}},
+          data: result
+        }
+      ]
+    };
+    myChart.setOption(option);
+  });
+})("more:year_average");
+
+void (function(id) {
+  var myChart = echarts.init(document.getElementById(id));
+
+  $.get("./data/more:city_avg.json", function(json) {
+    var result = [];
+    json[0].value.forEach(function(name, index) {
+      result.push({
+        name: name,
+        value: [
+          json[1].value[index],
+          json[2].value[index],
+          json[3].value[index],
+          json[4].value[index],
+          json[5].value[index],
+          json[6].value[index]
+        ]
+      });
+    });
+    option = {
+      title: {
+        // text: '「加入年份」&「各项均值」'
+      },
+      tooltip: {},
+      legend: {
+        data: json[0].value.sort()
+      },
+      radar: {
+        // shape: 'circle',
+        name: {
+          textStyle: {
+            color: "#fff",
+            backgroundColor: "#999",
+            borderRadius: 3,
+            padding: [3, 5]
+          }
+        },
+        indicator: [
+          { name: "平均关注数", max: 200 },
+          { name: "平均被关注数", max: 2500 },
+          { name: "平均加入小组数", max: 80 },
+          { name: "平均评论数", max: 30 },
+          { name: "平均电影数", max: 2500 },
+          { name: "平均阅读数", max: 1200 }
+        ]
+      },
+      series: [
+        {
+          name: "",
+          type: "radar",
+          // areaStyle: {normal: {}},
+          data: result
+        }
+      ]
+    };
+    myChart.setOption(option);
+  });
+})("more:city_average");
+
+void (function(id) {
+  var myChart = echarts.init(document.getElementById(id));
+
+  $.get("./data/more:city_movie.json", function(json) {
+    option = {
+      angleAxis: {
+        type: "category",
+        data: json[0].value,
+        z: 10
+      },
+      radiusAxis: {},
+      polar: {},
+      series: [
+        {
+          type: "bar",
+          data: json[3].value,
+          coordinateSystem: "polar",
+          name: "看过",
+          stack: "a"
+        },
+        {
+          type: "bar",
+          data: json[2].value,
+          coordinateSystem: "polar",
+          name: "想看",
+          stack: "a"
+        },
+        {
+          type: "bar",
+          data: json[1].value,
+          coordinateSystem: "polar",
+          name: "在看",
+          stack: "a"
+        }
+      ],
+      legend: {
+        show: true,
+        data: ["看过", "想看", "在看"]
+      }
+    };
+
+    myChart.setOption(option);
+  });
+})("more:city_movie");
