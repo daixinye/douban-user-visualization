@@ -1157,7 +1157,7 @@ void (function(id) {
           itemHeight: 120,
           calculable: true,
           precision: 0.1,
-          text: ["明暗：二氧化硫"],
+          text: ["加入时长"],
           textGap: 30,
           textStyle: {
             color: "#fff"
