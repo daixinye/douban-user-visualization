@@ -61,7 +61,12 @@
   <body>
     <div id="info-loading">正在载入...</div>
     <div id="fullpage" style="display:none;">
-      <!-- <div class="section"></div> -->
+      <!--
+        <div class="section"><div
+          id="more:dur_rev_contact"
+          style="width: 800px;height:600px;margin: 0 auto;"
+        ></div></div>
+      -->
 
       <!-- 首页 -->
       <div class="section">
@@ -93,7 +98,7 @@
           ></iframe>
           <p>
             用户ID | 用户名 | 用户头像 | 加入日期 | 常居地 | 关注数 | 被关注数 |
-            评论数 | 电影 | 阅读
+            评论数 | 小组数 | 电影 | 阅读
           </p>
         </div>
       </div>
@@ -118,7 +123,9 @@
         </div>
         <div class="slide">
           <img src="http://img.daixinye.com/20190114221216.png" />
-          <!-- <img src="http://img.daixinye.com/20190113153349.png" alt="" /> -->
+          <!--
+            <img src="http://img.daixinye.com/20190113153349.png" alt="" />
+          -->
           <h2>爬取数据</h2>
           <p>运行、输出关键信息、手动切换 IP ...</p>
         </div>
@@ -131,14 +138,6 @@
           <img src="http://img.daixinye.com/20190113154258.png" alt="" />
         </div>
       </div>
-      <!--
-        <div class="section">
-          <div class="slide">
-            <h1>爬取数据</h1>
-            <h2>反反爬虫、Reids 数据存储及共享</h2>
-          </div>
-        </div>
-      -->
       <div class="section">
         <div class="slide">
           <h1>处理数据</h1>
@@ -150,14 +149,14 @@
         </div>
         <div class="slide">
           <img src="http://img.daixinye.com/20190113153642.png" alt="" />
-          <h2>导入到 MySQL 中进行分析</h2>
+          <h2>导入到 MySQL 中进行初步分析</h2>
         </div>
         <div class="slide">
-          <img src="http://img.daixinye.com/20190114225540.png" alt="">
-          <h2>数据清洗、扩展、导出</h2>
+          <img src="http://img.daixinye.com/20190115004223.png" alt="" />
+          <h2>使用 Python 进行数据清洗、扩展、导出</h2>
         </div>
         <div class="slide">
-          <img src="http://img.daixinye.com/20190114225316.png" alt="">
+          <img src="http://img.daixinye.com/20190114225316.png" alt="" />
           <h2>处理成适合可视化使用的 JSON 格式数据</h2>
         </div>
       </div>
@@ -168,6 +167,7 @@
           <h2>jQuery + Fullpage.js + Echarts</h2>
         </div>
       </div>
+
       <div class="section">
         <div class="slide">
           <p>
@@ -199,6 +199,9 @@
             id="time:year"
             style="width: 800px;height:600px;margin: 0 auto;"
           ></div>
+          <h2>
+            05年至09年注册用户数增速最快，“增量”阶段<br />09年后逐渐回落经历一个小高潮之后进入“存量”阶段
+          </h2>
         </div>
         <!-- 月份分布 -->
         <div class="slide">
@@ -206,6 +209,7 @@
             id="time:month"
             style="width: 800px;height:600px;margin: 0 auto;"
           ></div>
+          <h2>冬季和春季用户注册量最多</h2>
         </div>
         <!-- 年份按序分布 -->
         <div class="slide">
@@ -213,6 +217,7 @@
             id="time:year_sort"
             style="width: 800px;height:600px;margin: 0 auto;"
           ></div>
+          <h2>08年、09年、10年是用户增长最快的几年</h2>
         </div>
         <!-- 月份按序分布 -->
         <div class="slide">
@@ -220,6 +225,9 @@
             id="time:month_sort"
             style="width: 800px;height:600px;margin: 0 auto;"
           ></div>
+          <h2>
+            1月、2月以及7月、8月用户增长最快<br />考虑到豆瓣青年用户较多，猜测可能是寒暑假的时候
+          </h2>
         </div>
       </div>
 
@@ -229,8 +237,9 @@
         <div class="slide">
           <div
             id="location:map"
-            style="width: 800px;height:600px;margin: 0 auto;"
+            style="width: 1000px;height:750px;margin: 0 auto;"
           ></div>
+          <h2>豆瓣用户主要集中在东部沿海地区、华中省会城市和直辖市</h2>
         </div>
         <!-- 地区按序分布 -->
         <div class="slide">
@@ -238,6 +247,9 @@
             id="location:sort"
             style="width: 800px;height:600px;margin: 0 auto;"
           ></div>
+          <h2>
+            北京、上海占据了用户来源的Top2，深圳作为四大一线城市之一在文艺青年的数量上稍逊一筹
+          </h2>
         </div>
         <!-- 海外用户 -->
         <div class="slide">
@@ -245,17 +257,29 @@
             id="location:country"
             style="width: 800px;height:600px;margin: 0 auto;"
           ></div>
+          <h2>常居地为海外的用户，一半来自于美国、英国和澳大利亚</h2>
         </div>
       </div>
 
       <!-- 电影 -->
       <div class="section">
-        <div class="slide"><h1>「 电影 」</h1></div>
+        <div class="slide"><h1>「 电影 」&「 阅读 」</h1></div>
         <div class="slide">
           <div
             id="movie"
             style="width: 800px;height:600px;margin: 0 auto;"
           ></div>
+          <h2>
+            绝大多数用户的电影「在看」列表为
+            0，对「看过」的标记数量则远远大于「想看」
+          </h2>
+        </div>
+        <div class="slide">
+          <div
+            id="book"
+            style="width: 800px;height:600px;margin: 0 auto;"
+          ></div>
+          <h2>阅读的分布与电影类似，但数量整体左移</h2>
         </div>
       </div>
 
@@ -267,6 +291,12 @@
             id="contact:all"
             style="width: 800px;height:600px;margin: 0 auto;"
           ></div>
+
+          <h2>
+            「关注」数量为0-20、100-200、20-40的用户占了 50% 以上<br />
+            「被关注」数量为0-10的用户约占了所有用户的
+            20%、数量为100-500的占了约 23%
+          </h2>
         </div>
       </div>
 
@@ -278,18 +308,23 @@
             id="user:username"
             style="width: 800px;height:600px;margin: 0 auto;"
           ></div>
+          <h2>
+            用户的昵称里，用的最多中文字符是「小」、「阿」、「一」、「大」和「我」
+          </h2>
         </div>
         <div class="slide">
           <div
             id="user:username_en"
             style="width: 800px;height:600px;margin: 0 auto;"
           ></div>
+          <h2>英文字符用的最多的则是「S」、「M」、「A」、「s」和「L」</h2>
         </div>
         <div class="slide">
           <div
             id="user:id"
             style="width: 800px;height:600px;margin: 0 auto;"
           ></div>
+          <h2>对ID未进行自定义的仅比自定义的多了 1.04%</h2>
         </div>
       </div>
 
@@ -303,6 +338,9 @@
             id="more:year_average"
             style="width: 800px;height:600px;margin: 0 auto;"
           ></div>
+          <h2>
+            用户的各项数据随着加入时间的变长逐渐增大 <br />05年的老用户各项指标（除了加入小组数）都远大于其他年份的用户
+          </h2>
         </div>
         <!-- 地区与平均值 -->
         <div class="slide">
@@ -310,6 +348,9 @@
             id="more:city_average"
             style="width: 800px;height:600px;margin: 0 auto;"
           ></div>
+          <h2>
+            北京的用户最爱关注别人也最受别人关注，并且最喜爱阅读 <br />上海人喜欢看电影和加小组，广州人最喜欢评论
+          </h2>
         </div>
         <!-- 地区 电影 堆叠图 -->
         <div class="slide">
@@ -317,19 +358,13 @@
             id="more:city_movie"
             style="width: 800px;height:600px;margin: 0 auto;"
           ></div>
+          <h2>电影与城市，北上差距不大，但「看过」的电影远超其他城市</h2>
         </div>
         <!-- 关注数、被关注数、加入时长 -->
-        <div class="slide">
-          <div
-            id="more:dur_rev_contact"
-            style="width: 800px;height:600px;margin: 0 auto;"
-          ></div>
-        </div>
-        <!-- 所有数据 -->
         <!--
           <div class="slide">
             <div
-              id="more:all"
+              id="more:dur_rev_contact"
               style="width: 800px;height:600px;margin: 0 auto;"
             ></div>
           </div>

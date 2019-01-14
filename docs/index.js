@@ -1,3 +1,4 @@
+var TOTAL = 15174;
 void (function(id) {
   var mapChart = echarts.init(document.getElementById(id));
 
@@ -50,12 +51,12 @@ void (function(id) {
         visualMap: {
           min: 0,
           max: 500,
-          calculable: false,
+          calculable: true,
           inRange: {
             color: ["#50a3ba", "#eac736", "#d94e5d"]
           },
           textStyle: {
-            color: "#fff"
+            color: "#333"
           }
         },
         geo: {
@@ -110,17 +111,17 @@ void (function(id) {
 
   $.get("./data/location:country.json", function(json) {
     data = json;
-    
+
     option = {
       series: {
-          type: 'sunburst',
-          data: data,
-          radius: [0, '90%'],
-          label: {
-              rotate: 'radial'
-          }
+        type: "sunburst",
+        data: data,
+        radius: [0, "90%"],
+        label: {
+          rotate: "radial"
+        }
       }
-  };
+    };
     myChart.setOption(option);
   });
 })("location:country");
@@ -129,19 +130,21 @@ void (function(id) {
   var myChart = echarts.init(document.getElementById(id));
 
   $.get("./data/location:map_data.json", function(data) {
-    data = data.sort(function(a,b){
-      return b.value - a.value
-    }).filter(function(a){
-      return a.value > 200
-    })
+    data = data
+      .sort(function(a, b) {
+        return b.value - a.value;
+      })
+      .filter(function(a) {
+        return a.value > 200;
+      });
 
     var result = [];
     data.forEach(function(item) {
       result.push([item.name, item.value]);
     });
-    result.sort(function(a,b){
-      return a[1] - b[1]
-    })
+    result.sort(function(a, b) {
+      return a[1] - b[1];
+    });
     result.unshift(["city", "num"]);
     var option = {
       dataset: {
@@ -604,7 +607,7 @@ void (function(id) {
   $.get("./data/movie.json", function(json) {
     option = {
       title: {
-        text: "电影「想看、在看、看过」"
+        text: "电影"
         // subtext: "纯属虚构"
       },
       tooltip: {
@@ -674,6 +677,82 @@ void (function(id) {
     myChart.setOption(option);
   });
 })("movie");
+
+void (function(id) {
+  var myChart = echarts.init(document.getElementById(id));
+  $.get("./data/book.json", function(json) {
+    option = {
+      title: {
+        text: "阅读"
+        // subtext: "纯属虚构"
+      },
+      tooltip: {
+        trigger: "axis"
+      },
+      legend: {
+        data: ["想看", "在看", "看过"]
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ["line", "bar"] },
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      calculable: true,
+      xAxis: [
+        {
+          type: "category",
+          data: json.category
+        }
+      ],
+      yAxis: [
+        {
+          type: "value"
+        }
+      ],
+      series: [
+        {
+          name: "在看",
+          type: "bar",
+          data: json.do
+          //   markPoint: {
+          //     data: [
+          //       { type: "max", name: "最大值" },
+          //       { type: "min", name: "最小值" }
+          //     ]
+          //   },
+          //   markLine: {
+          //     data: [{ type: "average", name: "平均值" }]
+          //   }
+        },
+        {
+          name: "看过",
+          type: "bar",
+          data: json.collect
+          //   markPoint: {
+          //     data: [
+          //       { name: "年最高", value: 182.2, xAxis: 7, yAxis: 183 },
+          //       { name: "年最低", value: 2.3, xAxis: 11, yAxis: 3 }
+          //     ]
+          //   },
+          //   markLine: {
+          //     data: [{ type: "average", name: "平均值" }]
+          //   }
+        },
+        {
+          name: "想看",
+          type: "bar",
+          data: json.wish
+        }
+      ]
+    };
+
+    myChart.setOption(option);
+  });
+})("book");
 
 // 关注以及被关注
 void (function(id) {
@@ -814,14 +893,14 @@ void (function(id) {
         },
         {
           type: "pie",
-          radius: [0, "30%"],
-          center: ["80%", "30%"],
-          roseType: true,
+          radius: ["20%", "30%"],
+          center: ["75%", "30%"],
+          // roseType: true,
           data: json.contact.key
             .map(function(item, index) {
               return {
                 name: item,
-                value: json.contact.value[index]
+                value: ((json.contact.value[index] * 100) / TOTAL).toFixed(2)
               };
             })
             .sort(function(a, b) {
@@ -830,14 +909,14 @@ void (function(id) {
         },
         {
           type: "pie",
-          radius: [0, "30%"],
-          center: ["80%", "80%"],
-          roseType: true,
+          radius: ["20%", "30%"],
+          center: ["75%", "80%"],
+          // roseType: true,
           data: json.contactRev.key
             .map(function(item, index) {
               return {
                 name: item,
-                value: json.contact.value[index]
+                value: ((json.contactRev.value[index] * 100) / TOTAL).toFixed(2)
               };
             })
             .sort(function(a, b) {
@@ -1014,182 +1093,185 @@ void (function(id) {
 })("user:id");
 
 // 更多
-void (function(id) {
-  var myChart = echarts.init(document.getElementById(id));
+// void (function(id) {
+//   var myChart = echarts.init(document.getElementById(id));
 
-  $.get("./data/more:dur_rev_contact.json", function(json) {
-    var data = json.slice(0, 10000);
+//   $.get("./data/more:dur_rev_contact_final.json", function(json) {
+//     // var data = json.slice(0, 10000);
 
-    var schema = [
-      { name: "关注数", index: 0, text: "关注数" },
-      { name: "被关注数", index: 1, text: "被关注数" },
-      { name: "加入时长", index: 2, text: "加入时长" }
-    ];
+//     var schema = [
+//       { name: "关注数", index: 1, text: "关注数" },
+//       { name: "被关注数", index: 1, text: "被关注数" },
+//       { name: "加入时长", index: 2, text: "加入时长" }
+//     ];
 
-    var itemStyle = {
-      normal: {
-        opacity: 0.8,
-        shadowBlur: 10,
-        shadowOffsetX: 0,
-        shadowOffsetY: 0,
-        shadowColor: "rgba(0, 0, 0, 0.5)"
-      }
-    };
+//     var citys = [ '上海', '北京', '南京', '广州', '成都', '杭州', '武汉', '深圳', '西安', '重庆' ],
+//     // var itemStyle =
 
-    option = {
-      backgroundColor: "#404a59",
-      color: ["#dd4444", "#fec42c", "#80F1BE"],
-      legend: {
-        y: "top",
-        data: ["全体"],
-        textStyle: {
-          color: "#fff",
-          fontSize: 16
-        }
-      },
-      grid: {
-        x: "10%",
-        x2: 150,
-        y: "18%",
-        y2: "10%"
-      },
-      tooltip: {
-        padding: 10,
-        backgroundColor: "#222",
-        borderColor: "#777",
-        borderWidth: 1,
-        formatter: function(obj) {
-          var value = obj.value;
-          return (
-            '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">' +
-            "基本信息：" +
-            "</div>" +
-            schema[0].text +
-            "：" +
-            value[0] +
-            "<br>" +
-            schema[1].text +
-            "：" +
-            value[1] +
-            "<br>" +
-            schema[2].text +
-            "：" +
-            value[2] +
-            "<br>"
-          );
-        }
-      },
-      xAxis: {
-        type: "value",
-        name: "关注数",
-        nameGap: 16,
-        nameTextStyle: {
-          color: "#fff",
-          fontSize: 14
-        },
-        max: 2500,
-        splitLine: {
-          show: false
-        },
-        axisLine: {
-          lineStyle: {
-            color: "#eee"
-          }
-        }
-      },
-      yAxis: {
-        type: "value",
-        name: "被关注数",
-        nameLocation: "end",
-        nameGap: 20,
-        nameTextStyle: {
-          color: "#fff",
-          fontSize: 16
-        },
-        max: 15000,
-        axisLine: {
-          lineStyle: {
-            color: "#eee"
-          }
-        },
-        splitLine: {
-          show: false
-        }
-      },
-      visualMap: [
-        // {
-        //     left: 'right',
-        //     top: '10%',
-        //     dimension: 2,
-        //     min: 0,
-        //     max: 20000,
-        //     itemWidth: 30,
-        //     itemHeight: 120,
-        //     calculable: true,
-        //     precision: 0.1,
-        //     text: ['圆形大小：PM2.5'],
-        //     textGap: 30,
-        //     textStyle: {
-        //         color: '#fff'
-        //     },
-        //     inRange: {
-        //         symbolSize: [10, 70]
-        //     },
-        //     outOfRange: {
-        //         symbolSize: [10, 70],
-        //         color: ['rgba(255,255,255,.2)']
-        //     },
-        //     controller: {
-        //         inRange: {
-        //             color: ['#c23531']
-        //         },
-        //         outOfRange: {
-        //             color: ['#444']
-        //         }
-        //     }
-        // },
-        {
-          left: "right",
-          bottom: "5%",
-          dimension: 2,
-          min: 0,
-          max: 5000,
-          itemHeight: 120,
-          calculable: true,
-          precision: 0.1,
-          text: ["加入时长"],
-          textGap: 30,
-          textStyle: {
-            color: "#fff"
-          },
-          inRange: {
-            colorLightness: [1, 0.5]
-          },
-          outOfRange: {
-            color: ["rgba(255,255,255,.2)"]
-          },
-          controller: {
-            inRange: {
-              color: ["#c23531"]
-            },
-            outOfRange: {
-              color: ["#444"]
-            }
-          }
-        }
-      ],
-      series: [
-        {
-          name: "全体",
-          type: "scatter",
-          itemStyle: itemStyle,
-          data: data
-        }
-      ]
-    };
-    myChart.setOption(option);
-  });
-})("more:dur_rev_contact");
+//     option = {
+//       backgroundColor: "#404a59",
+//       color: ["#dd4444", "#fec42c", "#80F1BE"],
+//       legend: {
+//         y: "top",
+//         data: citys,
+//         textStyle: {
+//           color: "#fff",
+//           fontSize: 16
+//         }
+//       },
+//       grid: {
+//         x: "10%",
+//         x2: 150,
+//         y: "18%",
+//         y2: "10%"
+//       },
+//       tooltip: {
+//         padding: 10,
+//         backgroundColor: "#222",
+//         borderColor: "#777",
+//         borderWidth: 1,
+//         formatter: function(obj) {
+//           var value = obj.value;
+//           return (
+//             '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">' +
+//             "基本信息：" +
+//             "</div>" +
+//             schema[0].text +
+//             "：" +
+//             value[0] +
+//             "<br>" +
+//             schema[1].text +
+//             "：" +
+//             value[1] +
+//             "<br>" +
+//             schema[2].text +
+//             "：" +
+//             value[2] +
+//             "<br>"
+//           );
+//         }
+//       },
+//       xAxis: {
+//         type: "value",
+//         name: "关注数",
+//         nameGap: 16,
+//         nameTextStyle: {
+//           color: "#fff",
+//           fontSize: 14
+//         },
+//         max: 2500,
+//         splitLine: {
+//           show: false
+//         },
+//         axisLine: {
+//           lineStyle: {
+//             color: "#eee"
+//           }
+//         }
+//       },
+//       yAxis: {
+//         type: "value",
+//         name: "被关注数",
+//         nameLocation: "end",
+//         nameGap: 20,
+//         nameTextStyle: {
+//           color: "#fff",
+//           fontSize: 16
+//         },
+//         max: 15000,
+//         axisLine: {
+//           lineStyle: {
+//             color: "#eee"
+//           }
+//         },
+//         splitLine: {
+//           show: false
+//         }
+//       },
+//       visualMap: [
+//         // {
+//         //     left: 'right',
+//         //     top: '10%',
+//         //     dimension: 2,
+//         //     min: 0,
+//         //     max: 20000,
+//         //     itemWidth: 30,
+//         //     itemHeight: 120,
+//         //     calculable: true,
+//         //     precision: 0.1,
+//         //     text: ['圆形大小：PM2.5'],
+//         //     textGap: 30,
+//         //     textStyle: {
+//         //         color: '#fff'
+//         //     },
+//         //     inRange: {
+//         //         symbolSize: [10, 70]
+//         //     },
+//         //     outOfRange: {
+//         //         symbolSize: [10, 70],
+//         //         color: ['rgba(255,255,255,.2)']
+//         //     },
+//         //     controller: {
+//         //         inRange: {
+//         //             color: ['#c23531']
+//         //         },
+//         //         outOfRange: {
+//         //             color: ['#444']
+//         //         }
+//         //     }
+//         // },
+//         {
+//           left: "right",
+//           bottom: "5%",
+//           dimension: 2,
+//           min: 0,
+//           max: 5000,
+//           itemHeight: 120,
+//           calculable: false,
+//           precision: 0.1,
+//           text: ["加入时长"],
+//           textGap: 30,
+//           textStyle: {
+//             color: "#fff"
+//           },
+//           inRange: {
+//             colorLightness: [1, 0.5]
+//           },
+//           outOfRange: {
+//             color: ["rgba(255,255,255,.2)"]
+//           },
+//           controller: {
+//             inRange: {
+//               color: ["#c23531"]
+//             },
+//             outOfRange: {
+//               color: ["#444"]
+//             }
+//           }
+//         }
+//       ],
+//       series: [1,2,3,4,5,6,7,8,9,10].map(function(v,i){
+//         return {
+//           name: citys[i],
+//           type: "scatter",
+//           itemStyle: {
+//             normal: {
+//               opacity: 0.8,
+//               shadowBlur: 10,
+//               shadowOffsetX: 0,
+//               shadowOffsetY: 0,
+//               shadowColor: "rgba(0, 0, 0, 0.5)"
+//             }
+//           },
+//           data: json[citys[i]]
+//         }
+//       }),
+
+//     };
+//     console.log(option)
+//     myChart.setOption(option);
+//   });
+// })("more:dur_rev_contact");
 
 void (function(id) {
   var myChart = echarts.init(document.getElementById(id));
@@ -1238,7 +1320,7 @@ void (function(id) {
       },
       series: [
         {
-          name: "预算 vs 开销（Budget vs spending）",
+          // name: "预算 vs 开销（Budget vs spending）",
           type: "radar",
           // areaStyle: {normal: {}},
           data: result
