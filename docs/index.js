@@ -24,7 +24,7 @@ void (function(id) {
       option = {
         // backgroundColor: "#404a59",
         title: {
-          text: "基于「常居地」的用户分布",
+          // text: "基于「常居地」的用户分布",
           // subtext: "data from douban",
           // sublink: "http://www.douban.com",
           x: "center",
@@ -698,7 +698,7 @@ void (function(id) {
       tooltip: {},
       title: [
         {
-          text: "基于「关注数、被关注数」的用户分布",
+          // text: "基于「关注数、被关注数」的用户分布",
           // subtext: "关注数",
           x: "25%",
           textAlign: "center"
@@ -869,8 +869,8 @@ void (function(id) {
 
     option = {
       title: {
-        text: "「最常用字」",
-        subtext: "中文字符",
+        // text: "「最常用字」",
+        // subtext: "中文字符",
         x: "center"
       },
       tooltip: {
@@ -927,8 +927,8 @@ void (function(id) {
 
     option = {
       title: {
-        text: "「最常用字」",
-        subtext: "英文字符",
+        // text: "「最常用字」",
+        // subtext: "英文字符",
         x: "center"
       },
       tooltip: {
@@ -973,7 +973,7 @@ void (function(id) {
   $.get("./data/id:category.json", function(json) {
     option = {
       title: {
-        text: "「ID」",
+        // text: "「ID」",
         // subtext: '虚构数据',
         left: "center"
       },

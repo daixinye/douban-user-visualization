@@ -9,6 +9,9 @@
       rel="stylesheet"
     />
     <style>
+      html {
+        font-family: PingFangSC-Regular, sans-serif !important;
+      }
       .fp-controlArrow {
         opacity: 0.25;
         transition: opacity cubic-bezier(0.455, 0.03, 0.515, 0.955) 0.2s;
@@ -30,12 +33,22 @@
       }
 
       img {
-        width: 600px;
+        width: 800px;
       }
       em {
         font-size: 2em;
         text-decoration: none;
         padding: 0 2px;
+      }
+      h1 {
+        font-size: 4em;
+      }
+      h2 {
+        font-size: 2em;
+        font-weight: 0;
+      }
+      p {
+        font-size: 1.5em;
       }
     </style>
     <title>豆瓣用户公开数据可视化</title>
@@ -54,44 +67,109 @@
       <div class="section">
         <img src="http://img.daixinye.com/xiaohui.png" style="width:200px;" />
         <h1>豆瓣用户公开数据可视化</h1>
-        <h2>http://douban.daixinye.com</h2>
+        <p>戴鑫业 黄卓玥 魏冉</p>
       </div>
+
+      <div class="section"><h1>douban.daixinye.com</h1></div>
 
       <!-- 项目情况 -->
       <div class="section">
-        <div class="slide"><h1>「 作业过程 」</h1></div>
-
+        <h1>一、需求分析</h1>
+        <h1>二、获取数据</h1>
+        <h1>三、处理数据</h1>
+        <h1>四、数据可视化</h1>
+      </div>
+      <div class="section">
         <div class="slide">
-          <h2>一、编写爬虫</h2>
-          <h2>二、爬取数据</h2>
-          <h2>三、处理数据</h2>
-          <h2>四、前端展现</h2>
+          <h1>需求分析</h1>
+          <h2>豆瓣用户个人主页公开数据</h2>
         </div>
         <div class="slide">
-          <h2>一、编写爬虫</h2>
-          <img src="http://img.daixinye.com/20190113152304.png" alt="" />
-          <p>使用 Python 对豆瓣用户主页进行爬取</p>
+          <iframe
+            src="https://www.douban.com/people/turbine/"
+            frameborder="0"
+            width="1200"
+            height="700"
+          ></iframe>
           <p>
-            「用户ID 用户名 用户头像 加入日期 常居地 关注数 被关注数 评论数
-            电影（想看在看看过） 阅读（想看在看看过）」
+            用户ID | 用户名 | 用户头像 | 加入日期 | 常居地 | 关注数 | 被关注数 |
+            评论数 | 电影 | 阅读
+          </p>
+        </div>
+      </div>
+      <div class="section">
+        <div class="slide">
+          <h1>获取数据</h1>
+          <h2>使用 Python + Redis 爬取、存储豆瓣用户主页信息</h2>
+        </div>
+        <div class="slide">
+          <img src="http://img.daixinye.com/20190114223129.png" alt="" />
+          <h2>首先生成一个待爬用户池</h2>
+          <p>话题广场、电影评论、小组成员、关注人列表、被关注人列表...</p>
+        </div>
+        <div class="slide">
+          <img src="http://img.daixinye.com/20190113152304.png" alt="" />
+          <h2>编写爬取用户个人页面数据的爬虫</h2>
+          <p>
+            从 Redis
+            中获取随机用户ID、数据提取、异常情况处理（需要登录、无效用户等）、伪造HTTP
+            Header、随机时间sleep、循环...
           </p>
         </div>
         <div class="slide">
-          <h2>二、爬取数据</h2>
-          <img src="http://img.daixinye.com/20190113153349.png" alt="" />
-          <p>使用各种方法防止IP被封</p>
+          <img src="http://img.daixinye.com/20190114221216.png" />
+          <!-- <img src="http://img.daixinye.com/20190113153349.png" alt="" /> -->
+          <h2>爬取数据</h2>
+          <p>运行、输出关键信息、手动切换 IP ...</p>
         </div>
+
         <div class="slide">
-          <h2>三、处理数据</h2>
-          <img src="http://img.daixinye.com/20190113153642.png" alt="" />
-          <p>Redis、MySQL、Python、CSV、JSON</p>
-        </div>
-        <div class="slide">
-          <h2>四、前端展现</h2>
-          <p>Fullpage.js + Echarts</p>
-        </div>
-        <div class="slide">
+          <h2>一些事实...</h2>
+          <p>整个软院只有三个公网IP</p>
+          <p>能直接用接口获取的数据就不要去爬HTML了</p>
+          <p>不要作死带着Cookie去爬数据</p>
           <img src="http://img.daixinye.com/20190113154258.png" alt="" />
+        </div>
+      </div>
+      <!--
+        <div class="section">
+          <div class="slide">
+            <h1>爬取数据</h1>
+            <h2>反反爬虫、Reids 数据存储及共享</h2>
+          </div>
+        </div>
+      -->
+      <div class="section">
+        <div class="slide">
+          <h1>处理数据</h1>
+          <h2>Redis => MySQL => Python => JSON/CSV</h2>
+        </div>
+        <div class="slide">
+          <img src="http://img.daixinye.com/20190114224030.png" alt="" />
+          <h2>爬取的 Reids 原始数据</h2>
+        </div>
+        <div class="slide">
+          <img src="http://img.daixinye.com/20190113153642.png" alt="" />
+          <h2>导入到 MySQL 中进行分析</h2>
+        </div>
+        <div class="slide">
+          <img src="http://img.daixinye.com/20190114225540.png" alt="">
+          <h2>数据清洗、扩展、导出</h2>
+        </div>
+        <div class="slide">
+          <img src="http://img.daixinye.com/20190114225316.png" alt="">
+          <h2>处理成适合可视化使用的 JSON 格式数据</h2>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="slide">
+          <h1>数据可视化</h1>
+          <h2>jQuery + Fullpage.js + Echarts</h2>
+        </div>
+      </div>
+      <div class="section">
+        <div class="slide">
           <p>
             历时<em>5</em>天 <em>3</em>个被永久封停的账号 <em>2</em>G流量
             <em>1</em>个大作业 => <em>15174</em> 位用户
@@ -248,15 +326,20 @@
           ></div>
         </div>
         <!-- 所有数据 -->
-        <!-- <div class="slide">
-          <div
-            id="more:all"
-            style="width: 800px;height:600px;margin: 0 auto;"
-          ></div>
-        </div> -->
+        <!--
+          <div class="slide">
+            <div
+              id="more:all"
+              style="width: 800px;height:600px;margin: 0 auto;"
+            ></div>
+          </div>
+        -->
       </div>
 
-      <div class="section"><h1>Thanks</h1></div>
+      <div class="section">
+        <img src="http://img.daixinye.com/xiaohui.png" style="width:200px;" />
+        <h1>Thanks</h1>
+      </div>
     </div>
   </body>
   <script>
