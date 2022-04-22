@@ -1048,12 +1048,10 @@ fsevents@^1.2.2:
     nan "^2.9.2"
     node-pre-gyp "^0.10.0"
 
-fullpage.js@2.9.7:
-  version "2.9.7"
-  resolved "http://registry.npm.taobao.org/fullpage.js/download/fullpage.js-2.9.7.tgz#65b838a76a9cc459e6474d36ba54fd18aba52f3d"
-  integrity sha1-Zbg4p2qcxFnmR002ulT9GKulLz0=
-  dependencies:
-    jquery ">=1.6.0"
+fullpage.js@4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/fullpage.js/-/fullpage.js-4.0.5.tgz#033880e792610a28fe4f7c9ee49eff33a7b38e14"
+  integrity sha512-4OWRP08ogL35LwnNyDa8LNqRD0003HdolcVflfUyhMwAHVrpBNY9u1WYdAfnFEX7bd4vsermL7z22nmNqPWZvw==
 
 gauge@~2.7.3:
   version "2.7.4"
@@ -1436,7 +1434,7 @@ isobject@^3.0.0, isobject@^3.0.1:
   resolved "http://registry.npm.taobao.org/isobject/download/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
 
-jquery@>=1.6.0, jquery@^3.3.1:
+jquery@^3.3.1:
   version "3.3.1"
   resolved "http://registry.npm.taobao.org/jquery/download/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
   integrity sha1-lYzinoHJeQ8xvneS311NlfxX+8o=
