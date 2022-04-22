@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/daixinye/douban-user-visualization#readme",
   "dependencies": {
-    "fullpage.js": "2.9.7",
+    "fullpage.js": "4.0.5",
     "jquery": "^3.3.1",
     "webpack": "^4.28.1"
   },
